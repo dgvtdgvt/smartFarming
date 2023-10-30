@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.it.dao.ManagerHurdlesMapper">
+    <!--基础查询结果集-->
+    <resultMap id="BaseResultMap" type="managerHurdles">
+        <id property="hId" column="h_id"/>
+        <result property="hName" column="h_name"/>
+        <result property="hDesc" column="h_desc"/>
+        <result property="hMax" column="h_max"/>
+        <result property="hSaved" column="h_saved"/>
+        <result property="hTime" column="h_time"/>
+        <result property="hEnable" column="h_enable"/>
+        <result property="hFull" column="h_full"/>
+        <result property="hFenceId" column="h_fence_id"/>
+    </resultMap>
+
+    <!--基础sql字段-->
+    <sql id="Base_Column_List">
+        h_id
+        , h_name, h_desc, h_max, h_saved,
+        h_time, h_enable, h_full, h_fence_id
+    </sql>
+
+    <select id="selectCountByFhId" resultType="java.lang.Integer">
+        select count(*)
+        from manager_hurdles
+        where h_fence_id = #{fhId}
+    </select>
+
+    <select id="selectAllMax" resultMap="BaseResultMap">
+        select distinct h_max
+        from manager_hurdles
+    </select>
+    <select id="selectHurdlesAndFenceHouse" resultMap="BaseResultMap">
+        select * from manager_hurdles mh
+        left join manager_fence_house mfh on mh.h_fence_id = mfh.fh_id
+        <where>
+            <if test="hName != null">
+                mh.h_name like concat('%',#{hName},'%')
+            </if>
+            <if test="hMax != null">
+                and mh.h_max = #{hMax}
+            </if>
+            <if test="fhName != null">
+                and mfh.fh_name = #{fhName}
+            </if>
+            <if test="hEnable != null">
+                and mh.h_enable = #{hEnable}
+            </if>
+        </where>
+        order by mh.h_time desc
+    </select>
+
+    <update id="updateHEnable">
+        update manager_hurdles
+        set h_enable = #{hEnable}
+        where h_id = #{hId}
+    </update>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select *
+        from manager_hurdles
+        where h_id = #{hId}
+    </select>
+
+</mapper>
