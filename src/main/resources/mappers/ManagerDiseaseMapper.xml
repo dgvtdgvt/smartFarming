@@ -25,4 +25,10 @@
         group by md.d_id
     </select>
 
+    <select id="queryAllDisease" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from manager_disease
+    </select>
+
 </mapper>

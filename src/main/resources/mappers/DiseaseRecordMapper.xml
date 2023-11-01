@@ -18,4 +18,19 @@
         , dr_animal_id, dr_desc, dr_cure, dr_time, dr_status, dr_d_id
     </sql>
 
+    <delete id="deleteByPrimaryKey">
+        delete
+        from disease_record
+        where dr_id = #{drId}
+    </delete>
+
+    <delete id="deleteBatch">
+        delete
+        from disease_record
+        where dr_id IN
+        <foreach collection="ids" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
 </mapper>

@@ -1,6 +1,7 @@
 package com.it.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.it.pojo.ManagerHurdles;
 import com.it.pojo.ext.ManagerHurdlesExt;
 import com.it.result.Result;
 import com.it.service.HurdlesService;
@@ -61,6 +62,16 @@ public class HurdleController {
     public Result changeStatusBatch(@RequestBody List<Map<String, String>> idAndStatus) {
         hurdlesService.modifyStatusBatch(idAndStatus);
         return Result.success();
+    }
+    @ApiOperation("查询所有未满和未禁用的栏圈信息接口")
+    @GetMapping("/queryAllEnable")
+    public Result getAllEnableHurdles(){
+        return Result.success(hurdlesService.findAllEnable());
+    }
+
+    @PostMapping("/saveOrUpdate")
+    public Result saveOrUpdate(@RequestBody ManagerHurdles managerHurdles){
+        return null;
     }
 
 }

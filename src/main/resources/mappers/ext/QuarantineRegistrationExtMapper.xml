@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.it.dao.ext.QuarantineRegistrationExtMapper">
+
+    <resultMap id="BaseResultMap" type="com.it.pojo.ext.QuarantineRegistrationExt"
+               extends="com.it.dao.QuarantineRegistrationMapper.BaseResultMap">
+        <association property="managerBatch" resultMap="com.it.dao.ManagerBatchMapper.BaseResultMap"/>
+    </resultMap>
+
+    <select id="queryAllRegistration" resultMap="BaseResultMap">
+        select *
+        from quarantine_registration qr
+        LEFT JOIN manager_batch mb on qr.gr_batch_id = mb.b_serial_id
+        <where>
+            <if test="grMechanism != null">
+                qr.gr_mechanism = #{grMechanism}
+            </if>
+            <if test="bQualified != null">
+                and qr.b_qualified = #{bQualified}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

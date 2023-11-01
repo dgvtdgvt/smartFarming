@@ -17,4 +17,34 @@
         , gr_time, gr_img, gr_mechanism, gr_batch_id,b_qualified
     </sql>
 
+    <update id="updateByPrimaryKey" parameterType="com.it.pojo.QuarantineRegistration">
+        update quarantine_registration
+        set gr_time      = #{grTime},
+            gr_img       = #{grImg},
+            gr_mechanism = #{grMechanism},
+            gr_batch_id  = #{grBatchId},
+            b_qualified  = #{bQualified}
+        where gr_id = #{grId}
+    </update>
+
+    <insert id="insert" parameterType="com.it.pojo.QuarantineRegistration">
+        insert into quarantine_registration (gr_id, gr_time, gr_img,gr_mechanism, gr_batch_id, b_qualified)
+        values (#{grId}, #{grTime}, #{grImg}, #{grMechanism}, #{grBatchId}, #{bQualified})
+    </insert>
+
+    <delete id="deleteByPrimaryKey">
+        delete
+        from quarantine_registration
+        where quarantine_registration.gr_id = #{grId}
+    </delete>
+
+    <delete id="deleteBatch">
+        delete
+        from quarantine_registration
+        where quarantine_registration.gr_id IN
+        <foreach collection="ids" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
 </mapper>

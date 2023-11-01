@@ -38,10 +38,12 @@ public class FenceHouseServiceImpl implements FenceHouseService {
         return pageInfo;
     }
 
-    @Override
+  @Override
     public void saveOrUpdate(ManagerFenceHouse managerFenceHouse) {
         // 参数校验
+        //检查栏舍名称是否为空
         String fhName = managerFenceHouse.getFhName(); //栏舍名称
+
         if (managerFenceHouse.getFhTime() == null || !StringUtils.hasText(fhName)) {
             throw new ServiceException(ResultCode.PARAM_IS_EMPTY);
         }
@@ -84,12 +86,16 @@ public class FenceHouseServiceImpl implements FenceHouseService {
     }
 
     @Override
-    public void removeById(String fhId) {
+   public void removeById(String fhId) {
+        // 判断fhId是否存在
         if (managerFenceHouseMapper.selectByPrimaryKey(fhId) != null) {
+
             if (managerHurdlesMapper.selectCountByFhId(fhId) > 0) {
                 throw new ServiceException(ResultCode.DATA_CAN_NOT_DELETE);
             }
+
             if (managerHurdlesMapper.selectCountByFhId(fhId) == 0) {
+                // 删除fhId对应的记录
                 managerFenceHouseMapper.deleteByPrimaryKey(fhId);
             }
         } else {

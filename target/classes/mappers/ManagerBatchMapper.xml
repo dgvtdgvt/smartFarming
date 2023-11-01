@@ -15,5 +15,32 @@
         b_serial_id
         , b_desc, b_quarantine, b_qualified, b_time
     </sql>
+    <select id="selectAllUnquarantined" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from manager_batch
+        where b_quarantine = '未检疫'
+    </select>
+
+    <update id="updateBQuarantineAndBQualified">
+        update manager_batch
+        set b_quarantine = '已检疫',
+            b_qualified  = #{bQualified}
+        where b_serial_id = #{bSerialId}
+    </update>
+
+    <select id="selectAllBatches" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from manager_batch
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from manager_batch
+        where b_serial_id = #{aBatchId}
+    </select>
+
 
 </mapper>

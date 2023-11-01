@@ -22,5 +22,9 @@ public interface ManagerHurdlesMapper {
     int updateHEnable(@Param("hId") String hId,
                       @Param("hEnable") String hEnable);
 
-    public ManagerHurdles selectByPrimaryKey(String kId);
+    public ManagerHurdles selectByPrimaryKey(String hId);
+
+    List<ManagerHurdles> selectAllEnableHurdles();
+
+    int updateByPrimaryKey(ManagerHurdles managerHurdles);
 }

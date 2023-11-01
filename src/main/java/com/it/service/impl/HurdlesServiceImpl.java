@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.it.dao.ManagerHurdlesMapper;
 import com.it.exception.ServiceException;
+import com.it.pojo.ManagerHurdles;
 import com.it.pojo.ext.ManagerHurdlesExt;
 import com.it.result.ResultCode;
 import com.it.service.HurdlesService;
@@ -65,5 +66,11 @@ public class HurdlesServiceImpl implements HurdlesService {
         if (result == 0) {
             throw new ServiceException(ResultCode.FAIL);
         }
+    }
+
+    @Override
+    public List<ManagerHurdles> findAllEnable() {
+        List<ManagerHurdles> allHurdles = managerHurdlesMapper.selectAllEnableHurdles();
+        return allHurdles;
     }
 }

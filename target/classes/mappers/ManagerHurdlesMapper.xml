@@ -65,4 +65,19 @@
         where h_id = #{hId}
     </select>
 
+    <select id="selectAllEnableHurdles" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from manager_hurdles
+        where h_enable = '可用' and h_full = '未满'
+    </select>
+
+    <update id="updateByPrimaryKey" parameterType="managerAnimal">
+        update manager_hurdles
+        set
+            h_saved = #{hSaved},
+            h_full = #{hFull}
+        where h_id = #{hId}
+    </update>
+
 </mapper>

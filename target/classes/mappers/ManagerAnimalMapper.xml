@@ -27,4 +27,55 @@
         from manager_animal
     </select>
 
+    <insert id="insert" parameterType="managerAnimal">
+        insert into manager_animal (a_animal_id, a_weight, a_gender,
+                                    a_healthy, a_status, a_inoculate,
+                                    a_time, a_batch_id, a_hurdles_id)
+        values (#{aAnimalId}, #{aWeight}, #{aGender},
+                #{aHealthy}, #{aStatus}, #{aInoculate},
+                #{aTime}, #{aBatchId}, #{aHurdlesId})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="managerAnimal">
+        update manager_animal
+        set a_weight     = #{aWeight},
+            a_gender     = #{aGender},
+            a_healthy    = #{aHealthy},
+            a_status     = #{aStatus},
+            a_inoculate  = #{aInoculate},
+            a_time       = #{aTime},
+            a_batch_id   = #{aBatchId},
+            a_hurdles_id = #{aHurdlesId}
+        where a_animal_id = #{aAnimalId}
+    </update>
+
+    <update id="updateAHealthyByAAnimalId" parameterType="managerAnimal">
+        update manager_animal
+        set a_healthy = #{aHealthy}
+        where a_animal_id = #{aAnimalId}
+    </update>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from manager_animal
+        where a_animal_id = #{aAnimalId}
+    </select>
+
+    <delete id="deleteByPrimaryKey">
+        delete
+        from manager_animal
+        where a_animal_id = #{id}
+    </delete>
+
+    <delete id="deleteBatch">
+        delete
+        from manager_animal
+        where a_animal_id in
+        <foreach collection="ids" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+
 </mapper>

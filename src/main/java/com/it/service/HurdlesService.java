@@ -12,4 +12,5 @@ public interface HurdlesService {
     public PageInfo<ManagerHurdlesExt> findByPage(Integer pageNum, Integer pageSize, String hName, Integer hMax, String fhName, String hEnable);
     public void modifyStatus(String hId, String hEnable);
     public void modifyStatusBatch(List<Map<String, String>> idAndStatus);
+    public List<ManagerHurdles> findAllEnable();
 }
