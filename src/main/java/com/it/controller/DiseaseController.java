@@ -66,6 +66,7 @@ public class DiseaseController {
     @ApiOperation("添加或修改病症记录接口")
     @PostMapping("/saveOrUpdate")
     public Result saveOrUpdate(@RequestBody DiseaseRecord diseaseRecord){
-        return null;
+        diseaseRecordService.saveOrUpdate(diseaseRecord);
+        return Result.success();
     }
 }

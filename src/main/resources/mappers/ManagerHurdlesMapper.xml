@@ -29,10 +29,11 @@
         where h_fence_id = #{fhId}
     </select>
 
-    <select id="selectAllMax" resultMap="BaseResultMap">
+    <select id="selectAllMax" resultType="integer">
         select distinct h_max
         from manager_hurdles
     </select>
+
     <select id="selectHurdlesAndFenceHouse" resultMap="BaseResultMap">
         select * from manager_hurdles mh
         left join manager_fence_house mfh on mh.h_fence_id = mfh.fh_id
@@ -74,10 +75,21 @@
 
     <update id="updateByPrimaryKey" parameterType="managerAnimal">
         update manager_hurdles
-        set
-            h_saved = #{hSaved},
-            h_full = #{hFull}
+        set h_name    =#{hName},
+            h_desc    =#{hDesc},
+            h_max     =#{hMax},
+            h_time=#{hTime},
+            h_enable=#{hEnable},
+            h_fence_id=#{hFenceId},
+            h_saved   = #{hSaved},
+            h_full    = #{hFull}
         where h_id = #{hId}
     </update>
+
+    <insert id="insert">
+        insert into manager_hurdles
+        (h_id, h_name, h_desc, h_max, h_time, h_enable, h_fence_id, h_saved, h_full)
+        values (#{HId}, #{hName}, #{hDesc}, #{hMax}, #{hTime}, #{hEnable}, #{hFenceId}, 0, '未满')
+    </insert>
 
 </mapper>

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -82,10 +83,12 @@ public class ManagerAnimalServiceImpl implements ManagerAnimalService {
 
             // 动物存在，修改动物信息
             int result = managerAnimalMapper.updateByPrimaryKey(animal);
+
             if (result == 0) {
                 // 修改失败
                 throw new ServiceException(ResultCode.FAIL);
             }
+
             // 修改成功，判断是否修改了栏圈信息
             String aHurdlesIdOld = managerAnimal.getAHurdlesId();
             ManagerHurdles managerHurdlesOld = managerHurdlesMapper.selectByPrimaryKey(aHurdlesIdOld);
@@ -93,6 +96,9 @@ public class ManagerAnimalServiceImpl implements ManagerAnimalService {
             if (!aHurdlesIdNew.equals(aHurdlesIdOld)) {
                 // 修改新的栏圈信息
                 managerHurdlesNew.setHSaved(hSavedNew + 1);
+                if (Objects.equals(managerHurdlesNew.getHMax(), managerHurdlesNew.getHSaved())){
+                    managerHurdlesNew.setHFull("已满");
+                }
 
                 if (managerHurdlesMapper.updateByPrimaryKey(managerHurdlesNew) == 0) {
                     throw new ServiceException(ResultCode.FAIL);
@@ -123,6 +129,10 @@ public class ManagerAnimalServiceImpl implements ManagerAnimalService {
                 animal.setAStatus("养殖中");
             }
 
+            if (hFullNew.equals("已满")) {
+                throw new ServiceException(ResultCode.FAIL);
+            }
+
             // 执行添加
             animal.setAAnimalId(UUID.randomUUID().toString().replace("-", ""));
             int result = managerAnimalMapper.insert(animal);
@@ -132,7 +142,7 @@ public class ManagerAnimalServiceImpl implements ManagerAnimalService {
             }
             // 添加成功，修改栏圈信息
             managerHurdlesNew.setHSaved(hSavedNew + 1);
-            if (hSavedNew + result == hMaxNew) {
+            if (hSavedNew + 1 == hMaxNew) {
                 // 栏圈已满，修改h_Full字段
                 managerHurdlesNew.setHFull("已满");
             }

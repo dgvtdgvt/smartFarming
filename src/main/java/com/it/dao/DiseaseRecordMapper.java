@@ -10,4 +10,8 @@ public interface DiseaseRecordMapper {
     void deleteByPrimaryKey(String drId);
 
     void deleteBatch(List<String> ids);
+
+    DiseaseRecord selectByPrimaryKey(Integer drId);
+    int updateByPrimaryKey(DiseaseRecord diseaseRecord);
+    int insert(DiseaseRecord diseaseRecord);
 }

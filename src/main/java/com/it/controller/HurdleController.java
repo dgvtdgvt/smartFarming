@@ -31,12 +31,12 @@ public class HurdleController {
 
     @ApiOperation("分页多条件查询栏舍信息接口")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum",value = "当前页码", defaultValue = "1", required = true),
-            @ApiImplicitParam(name = "pageSize",value = "每页大小", defaultValue = "10", required = true),
-            @ApiImplicitParam(name = "hName",value = "栏圈名称"),
-            @ApiImplicitParam(name = "hMax",value = "栏圈容量"),
-            @ApiImplicitParam(name = "fhName",value = "栏舍名称"),
-            @ApiImplicitParam(name = "hEnable",value = "是否可用")
+            @ApiImplicitParam(name = "pageNum", value = "当前页码", defaultValue = "1", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页大小", defaultValue = "10", required = true),
+            @ApiImplicitParam(name = "hName", value = "栏圈名称"),
+            @ApiImplicitParam(name = "hMax", value = "栏圈容量"),
+            @ApiImplicitParam(name = "fhName", value = "栏舍名称"),
+            @ApiImplicitParam(name = "hEnable", value = "是否可用")
     })
     @GetMapping
     public Result queryByConditionsAndPage(Integer pageNum,
@@ -63,15 +63,18 @@ public class HurdleController {
         hurdlesService.modifyStatusBatch(idAndStatus);
         return Result.success();
     }
+
     @ApiOperation("查询所有未满和未禁用的栏圈信息接口")
     @GetMapping("/queryAllEnable")
-    public Result getAllEnableHurdles(){
+    public Result getAllEnableHurdles() {
         return Result.success(hurdlesService.findAllEnable());
     }
 
+    @ApiOperation("新增或修改栏圈信息接口")
     @PostMapping("/saveOrUpdate")
-    public Result saveOrUpdate(@RequestBody ManagerHurdles managerHurdles){
-        return null;
+    public Result saveOrUpdate(@RequestBody ManagerHurdles managerHurdles) {
+        hurdlesService.saveOrUpdate(managerHurdles);
+        return Result.success();
     }
 
 }

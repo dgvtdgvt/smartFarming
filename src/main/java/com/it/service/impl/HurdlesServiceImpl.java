@@ -10,9 +10,11 @@ import com.it.result.ResultCode;
 import com.it.service.HurdlesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class HurdlesServiceImpl implements HurdlesService {
@@ -73,4 +75,27 @@ public class HurdlesServiceImpl implements HurdlesService {
         List<ManagerHurdles> allHurdles = managerHurdlesMapper.selectAllEnableHurdles();
         return allHurdles;
     }
+
+    @Override
+    public void saveOrUpdate(ManagerHurdles managerHurdles) {
+        int result; // sql语句执行后，返回受影响的行数result
+//        修改
+        if (managerHurdles.getHId()!=null){
+            ManagerHurdles managerHurdles1 = managerHurdlesMapper.selectByPrimaryKey(managerHurdles.getHId());
+            if (managerHurdles1.getHSaved()>managerHurdles.getHMax()){
+                throw new ServiceException(ResultCode.FAIL);
+            }
+            result = managerHurdlesMapper.updateByPrimaryKey(managerHurdles);
+        }
+//        新增
+        else {
+            managerHurdles.setHId(UUID.randomUUID().toString().replace("-", ""));
+            result = managerHurdlesMapper.insert(managerHurdles);
+        }
+        // 添加或者修改失败
+        if (result == 0) {
+            throw new ServiceException(ResultCode.FAIL);
+        }
+    }
+
 }

@@ -21,7 +21,13 @@ public class AnimalController {
     @Autowired
     private ManagerAnimalService managerAnimalService;
     @ApiOperation("分页多条件查询动物信息以及对应批次和栏圈信息接口")
-    @GetMapping
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "当前页码", defaultValue = "1", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页大小", defaultValue = "10", required = true),
+            @ApiImplicitParam(name = "aHealthy", value = "健康状态"),
+            @ApiImplicitParam(name = "aGender", value = "动物性别"),
+    })
+    @GetMapping("")
     public Result getAnimalRelated(Integer pageNum, int pageSize, String aHealthy, String aGender) {
         PageInfo<ManagerAnimalExt> result = managerAnimalService.findByPage(pageNum, pageSize, aHealthy, aGender);
         return Result.success(result);

@@ -32,5 +32,25 @@
             #{id}
         </foreach>
     </delete>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from disease_record
+        where dr_id=#{drId}
+    </select>
+
+    <update id="updateByPrimaryKey" parameterType="diseaseRecord">
+        UPDATE disease_record
+        SET dr_desc   = #{drDesc},
+            dr_cure   = #{drCure},
+            dr_time   = #{drTime},
+            dr_status = #{drStatus}
+        WHERE dr_id = #{drId}
+    </update>
+
+    <insert id="insert" parameterType="diseaseRecord">
+        INSERT INTO disease_record (dr_animal_id, dr_desc, dr_cure, dr_time, dr_status, dr_d_id)
+        VALUES (#{drAnimalId}, #{drDesc}, #{drCure}, #{drTime}, #{drStatus}, #{drDId})
+    </insert>
 
 </mapper>

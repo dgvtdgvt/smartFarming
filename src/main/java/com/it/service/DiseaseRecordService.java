@@ -3,6 +3,7 @@ package com.it.service;
 import com.github.pagehelper.PageInfo;
 import com.it.pojo.DiseaseRecord;
 import com.it.pojo.ManagerDisease;
+import com.it.pojo.ManagerHurdles;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface DiseaseRecordService {
                                        Integer pageSize);
     void removeById(String id);
     void removeBatch(List<String> ids);
+    public void saveOrUpdate(DiseaseRecord diseaseRecord);
 }

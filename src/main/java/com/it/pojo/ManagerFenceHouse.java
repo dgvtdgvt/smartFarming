@@ -9,10 +9,13 @@ import java.util.Date;
 public class ManagerFenceHouse {
     @JsonProperty("fhId")
     private String fhId;
+
     @JsonProperty("fhName")
     private String fhName;
+
     @JsonProperty("fhDesc")
     private String fhDesc;
+
     @JsonProperty("fhTime")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date fhTime;

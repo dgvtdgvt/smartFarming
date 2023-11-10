@@ -4,6 +4,7 @@ import com.it.pojo.ManagerHurdles;
 import com.it.pojo.ext.ManagerHurdlesExt;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,4 +28,5 @@ public interface ManagerHurdlesMapper {
     List<ManagerHurdles> selectAllEnableHurdles();
 
     int updateByPrimaryKey(ManagerHurdles managerHurdles);
+    int insert(ManagerHurdles managerHurdles);
 }

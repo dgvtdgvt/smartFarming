@@ -27,9 +27,10 @@ public enum ResultCode {
 	/* 栏舍管理模块错误 2001 - 2999 */
 	FENCE_HOUSE_IS_EXIST(2001, "栏舍名称已经存在"),
 	/* 栏圈管理模块错误 3001 - 3999 */
+	HURDLES_SAVED_MAX(3001,"该栏圈已满"),
 
 	/* 动物管理模块错误 4001 - 4999 */
-	ANIMAL_IS_NOT_IN_BREEDING(4001, "动物不在养殖中，无法添加病症记录")
+	ANIMAL_IS_NOT_IN_BREEDING(4001, "动物不在养殖中，无法添加病症记录"),
 
 	/* 指标记录模块错误 5001 - 5999 */
 

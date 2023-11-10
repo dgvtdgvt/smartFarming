@@ -5,10 +5,13 @@ import com.github.pagehelper.PageInfo;
 import com.it.dao.DiseaseRecordMapper;
 import com.it.dao.ManagerDiseaseMapper;
 import com.it.dao.ext.DiseaseRecordExtMapper;
+import com.it.exception.ServiceException;
 import com.it.pojo.DiseaseRecord;
 import com.it.pojo.ManagerDisease;
+import com.it.pojo.ManagerHurdles;
 import com.it.pojo.ext.DiseaseRecordExt;
 import com.it.result.Result;
+import com.it.result.ResultCode;
 import com.it.service.DiseaseRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,4 +51,22 @@ public class DiseaseRecordServiceImpl implements DiseaseRecordService {
     public void removeBatch(List<String> ids) {
         diseaseRecordMapper.deleteBatch(ids);
     }
+
+    @Override
+    public void saveOrUpdate(DiseaseRecord diseaseRecord) {
+        int result; // sql语句执行后，返回受影响的行数result
+//        修改
+        if (diseaseRecord.getDrId()!=null){
+            result = diseaseRecordMapper.updateByPrimaryKey(diseaseRecord);
+        }
+//        新增
+        else {
+            result = diseaseRecordMapper.insert(diseaseRecord);
+        }
+        // 添加或者修改失败
+        if (result == 0) {
+            throw new ServiceException(ResultCode.FAIL);
+        }
+    }
+
 }
